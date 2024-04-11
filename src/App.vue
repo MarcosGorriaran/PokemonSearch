@@ -1,16 +1,29 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <AskPokemon @sendPokemon="RetrivePokemon"/>
+  <p>{{ pokemon.name }}</p>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AskPokemon from './components/AskPokemon.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AskPokemon
+},
+data() {
+  return {
+    pokemon: Object
   }
+},
+methods: {
+  RetrivePokemon(payload) {
+    console.log(payload);
+    this.pokemon = payload
+  }
+}
+  
 }
 </script>
 
@@ -22,5 +35,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+input,button{
+  border-color: black;
+  border-width: 2px;
+  border-radius: 5px;
+  border-style: solid ;
 }
 </style>
