@@ -4,7 +4,14 @@
         <form @submit.prevent>
             <label>Provide a pokemon name</label>
             <input type="text" v-model="pokemonName" />
+            <template v-if="loading">
+                <img src="LoadingImage.gif" id="loadingImg"/>
+            </template>
+            
             <button @click="getPokemon">Get Pokémon</button>
+            <template v-if="error">
+                <p>{{ errorMessage }}</p>
+            </template>
         </form>
     </div>
 </template>
@@ -18,22 +25,37 @@ export default {
     props: {},
     // Función que devuelve un  con las variables del componente Vue.
     data() {
-    return {
-        pokemonName: "",
-        pokedex: new PokemonClient()
-    };
+        return {
+            error: false,
+            loading: false,
+            errorMessage: "",
+            pokemonName: "",
+            pokedex: new PokemonClient()
+        };
     },
     // Lista de funciones que se ejecutarán cuando se acceda a la propiedad en cuestión.
     computed: {},
     // Lista de funciones (métodos) disponibles en el componente Vue.
     methods: {
-    getPokemon() {
-        this.pokedex.getPokemonByName(this.pokemonName).then((pokemon) => {
-            this.$emit("sendPokemon", pokemon);
-        });
+        getPokemon() {
+            this.error = false;
+            this.loading = true;
+            this.pokedex.getPokemonByName(this.pokemonName).then((pokemon) => {
+                this.$emit("sendPokemon", pokemon);
+                this.loading = false;
+            }).catch((error) => {
+                this.loading = false;
+                this.error = true;
+                this.errorMessage = error.message;
+            });
     }
     },
 };
 </script>
-<style>/* Estilos CSS */</style>
+<style>
+    #loadingImg{
+        width: 50px;
+        height: 50px;
+    }
+</style>
    

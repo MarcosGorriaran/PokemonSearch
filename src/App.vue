@@ -1,29 +1,42 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <AskPokemon @sendPokemon="RetrivePokemon"/>
-  <p>{{ pokemon.name }}</p>
+  
+  <ShowPokemon v-if="IsPokemonSet" @sendFavourite="AddFavourite" :pokemon="pokemon"/>
+  <FavouriteList :list="pokemonList"/>
 </template>
 
 <script>
 import AskPokemon from './components/AskPokemon.vue';
-
+import ShowPokemon from './components/ShowPokemon.vue';
+import FavouriteList from './components/FavouriteList.vue';
 export default {
   name: 'App',
   components: {
-    AskPokemon
+    FavouriteList,
+    AskPokemon,
+    ShowPokemon,
+    
 },
 data() {
   return {
-    pokemon: Object
+    pokemon: Object,
+    pokemonList: new Set(),
+    IsPokemonSet: false
   }
 },
 methods: {
   RetrivePokemon(payload) {
+    this.IsPokemonSet = true;
     console.log(payload);
     this.pokemon = payload
+  },
+  AddFavourite(payload){
+    this.pokemonList.add(payload);
   }
+},
+computed: {
 }
-  
 }
 </script>
 
