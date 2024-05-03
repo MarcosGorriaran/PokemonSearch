@@ -1,10 +1,11 @@
 <template>
  <!-- Código HTML -->
  <h2>Favourite List</h2>
- <template v-for="{item,index} in list" :key="index">
-    <div>
-        {{ hello(index)}}
-        <img v-bind:src="item[index].value.sprites.front_default" v-bind:alt=item[index].value.name />
+ <template >
+  {{ console.log(this.list,"item") }}
+    <div v-for="{item,index} in this.list" v-bind:key="index">
+      <h3>{{console.log(item,index)}}</h3>
+        <img v-bind:src="item.sprites.front_default" v-bind:alt=item.name />
     </div>
  </template>
 
@@ -16,7 +17,7 @@
       name: "ShowFavouriteList",
       // Lista de atributos (props) aceptados desde el componente padre.
       props: {
-         list: new Set()
+         list: Array
       },
       // Función que devuelve un  con las variables del componente Vue.
       data() {
@@ -29,9 +30,6 @@
       },
       // Lista de funciones (métodos) disponibles en el componente Vue.
       methods: {
-        hello(element){
-            console.log(element);
-        }
       },
     };
    </script>

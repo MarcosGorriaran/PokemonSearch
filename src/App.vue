@@ -21,7 +21,7 @@ export default {
 data() {
   return {
     pokemon: Object,
-    pokemonList: new Set(),
+    pokemonList: [],
     IsPokemonSet: false
   }
 },
@@ -32,7 +32,7 @@ methods: {
     this.pokemon = payload
   },
   AddFavourite(payload){
-    this.pokemonList.add(payload);
+    this.pokemonList.push(payload);
   }
 },
 computed: {
